@@ -1,20 +1,31 @@
 import './App.css';
 
-import React, { Suspense, lazy } from 'react';
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import React, { lazy } from 'react';
+import 'antd/dist/antd.css';
+import TheLayout from './TheLayout';
+import { BrowserRouter, Route, Switch } from 'react-router-dom';
 
-const Home = lazy(() => import('./views/homepage/Home'));
-// const About = lazy(() => import('./routes/About'));
+const loading = (
+  <div className="pt-3 text-center">
+    <div className="sk-spinner sk-spinner-pulse"></div>
+  </div>
+)
 
-const App = () => (
-  <Router>
-    <Suspense fallback={<div>Loading...</div>}>
-      <Switch>
-        <Route exact path="/" component={Home}/>
-        {/* <Route path="/about" component={About}/> */}
-      </Switch>
-    </Suspense>
-  </Router>
-);
+const App = () => {
+  // console.log(this.props)
+  return (
+    <BrowserRouter>
+      <React.Suspense fallback={loading}>
+        <Switch>
+          {/* <Route exact path="/login" name="Login Page" render={props => <Login {...props}/>} /> */}
+          {/* <Route exact path="/register" name="Register Page" render={props => <Register {...props}/>} /> */}
+          {/* <Route exact path="/404" name="Page 404" render={props => <Page404 {...props}/>} /> */}
+          {/* <Route exact path="/500" name="Page 500" render={props => <Page500 {...props}/>} /> */}
+          <Route path="/" name="Home" render={props => <TheLayout {...props} />} />
+        </Switch>
+      </React.Suspense>
+    </BrowserRouter>
+  );
+}
 
 export default App;
