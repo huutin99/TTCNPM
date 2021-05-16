@@ -1,9 +1,0 @@
-.container {
-  display: flex;
-  position: relative;
-}
-.image {
-  width: 347px;
-  height: 270px;
-  object-fit: cover;
-}
