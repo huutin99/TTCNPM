@@ -4,25 +4,21 @@ const articles = [
         id : 1,
         text : 'Article name',
         day : 'Feb 6th at 1:30pm',
-        reminder : false,
     },
     {
         id : 2,
         text : 'Article name1',
         day : 'Feb 6th at 1:30pm',
-        reminder : false,
     },
     {
         id : 3,
         text : 'Article name2',
         day : 'Feb 6th at 1:30pm',
-        reminder : false,
     },
     {
         id : 4,
         text : 'Article name3',
         day : 'Feb 6th at 1:30pm',
-        reminder : false,
     }
 ]
 const Articles = () => {
