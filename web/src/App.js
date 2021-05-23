@@ -49,7 +49,7 @@ function App() {
     <aside>
     <label for ="pepGioitinh">Thành phố :</label>
     
-     <input aria-required="true" id="pepGioitinh" placeholder="Nơi bạn đang sống" type="text"  />
+    <input aria-required="true" id="pepGioitinh" placeholder="Nơi bạn đang sống" type="text"  />
 </aside>
 
 </div>                  
