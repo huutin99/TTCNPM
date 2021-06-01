@@ -1,0 +1,188 @@
+.container {
+  width: 100%;
+  height: auto;
+  display: flex;
+  min-height: 100vh;
+  align-items: center;
+  flex-direction: column;
+  justify-content: flex-start;
+  background-color: rgba(233, 255, 176, 0.35);
+}
+.text {
+  top: 201px;
+  left: auto;
+  right: 232px;
+  bottom: auto;
+  position: absolute;
+  font-size: 25px;
+}
+.text01 {
+  top: 200px;
+  left: auto;
+  right: 332px;
+  bottom: auto;
+  position: absolute;
+  font-size: 25px;
+  text-align: left;
+}
+.text02 {
+  top: 199px;
+  left: auto;
+  right: 473px;
+  bottom: auto;
+  position: absolute;
+  font-size: 25px;
+}
+.text03 {
+  top: 258px;
+  left: 123px;
+  right: auto;
+  bottom: auto;
+  position: absolute;
+  font-size: 25px;
+}
+.text04 {
+  top: 204px;
+  left: 123px;
+  right: auto;
+  bottom: auto;
+  position: absolute;
+  font-size: 25px;
+}
+.text05 {
+  top: 372px;
+  left: auto;
+  right: 378px;
+  bottom: auto;
+  position: absolute;
+  font-size: 25px;
+  text-align: left;
+}
+.text06 {
+  top: 431px;
+  left: 118px;
+  right: auto;
+  bottom: auto;
+  position: absolute;
+  font-size: 25px;
+}
+.text07 {
+  top: 371px;
+  left: 121px;
+  right: auto;
+  bottom: auto;
+  position: absolute;
+  font-size: 25px;
+}
+.text08 {
+  top: 260px;
+  left: auto;
+  right: 504px;
+  bottom: auto;
+  position: absolute;
+  font-size: 25px;
+}
+.text09 {
+  top: 315px;
+  left: 121px;
+  right: auto;
+  bottom: auto;
+  position: absolute;
+  font-size: 25px;
+}
+.textinput {
+  top: 261px;
+  left: auto;
+  right: 151px;
+  width: 217px;
+  bottom: auto;
+  height: 35px;
+  position: absolute;
+}
+.textinput1 {
+  top: 371px;
+  left: auto;
+  right: 150px;
+  width: 217px;
+  bottom: auto;
+  height: 35px;
+  position: absolute;
+}
+.textinput2 {
+  top: auto;
+  left: 114px;
+  right: auto;
+  width: 217px;
+  bottom: 416px;
+  height: 35px;
+  position: absolute;
+}
+.textinput3 {
+  top: 373px;
+  left: 304px;
+  right: auto;
+  width: 217px;
+  bottom: auto;
+  height: 35px;
+  position: absolute;
+}
+.textinput4 {
+  top: 314px;
+  left: 303px;
+  right: auto;
+  width: 217px;
+  bottom: auto;
+  height: 35px;
+  position: absolute;
+}
+.textinput5 {
+  top: 200px;
+  left: 298px;
+  right: auto;
+  width: 217px;
+  bottom: auto;
+  height: 35px;
+  position: absolute;
+}
+.image {
+  top: auto;
+  left: 310px;
+  right: auto;
+  width: 205px;
+  bottom: 469px;
+  height: 96px;
+  position: absolute;
+  object-fit: cover;
+}
+.navlink {
+  top: auto;
+  left: 518px;
+  right: auto;
+  bottom: 323px;
+  position: absolute;
+  font-size: 25px;
+  background-color: #a7feff;
+}
+.radiobutton {
+  top: 210px;
+  left: auto;
+  right: 393px;
+  bottom: auto;
+  position: absolute;
+}
+.radiobutton1 {
+  top: 208px;
+  left: auto;
+  right: 284px;
+  bottom: auto;
+  position: absolute;
+}
+.text10 {
+  top: 99px;
+  left: 446px;
+  color: #ff0000;
+  right: auto;
+  bottom: auto;
+  position: absolute;
+  text-align: center;
+}
