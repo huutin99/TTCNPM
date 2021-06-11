@@ -34,14 +34,6 @@ const ContentArticle = () => {
   return (
     <div className='Content'>
       <Layout>
-        <Header className="header">
-          <div className="logo" />
-          <Menu theme="dark" mode="horizontal" defaultSelectedKeys={['2']}>
-            <Menu.Item key="1">Trang chủ</Menu.Item>
-            <Menu.Item key="2">Mới nhất</Menu.Item>
-            <Menu.Item key="3">Nổi bật</Menu.Item>
-          </Menu>
-        </Header>
         <Layout >
           <Sider
             style={{
@@ -137,7 +129,6 @@ Theo Trung tâm Đáp ứng khẩn cấp sự kiện y tế công cộng Việt 
             />
         </Sider>
         </Layout>
-        <Footer style={{ textAlign: 'center' }}>Ant Design ©2018 Created by Ant UED</Footer>
 
       </Layout>
 

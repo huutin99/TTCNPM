@@ -22,6 +22,7 @@ const getUsers = (request, response) => {
 
 module.exports = {
     getUsers,
+    pool
     // getUserById,
     // createUser,
     // updateUser,
