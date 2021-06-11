@@ -2,7 +2,7 @@ import React from 'react'
 
 import Helmet from 'react-helmet'
 
-import projectStyles from '../style.module.css'
+import projectStyles from './style.module.css'
 import styles from './o-t-p.module.css'
 
 const OTP = () => {

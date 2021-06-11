@@ -33,7 +33,7 @@ const Home = () => {
           <span className={styles.text03}>NHÚNG TIKTOK VIDEO VÀO WEBSITE</span>
         </span>
         <img
-          alt="image"
+          alt="avatar"
           src="https://static.tuoitre.vn/tto/i/s626/2019/03/14/0d99b255.jpg"
           className={styles.image}
         />
@@ -56,7 +56,7 @@ const Home = () => {
           </a>
         </span>
         <img
-          alt="image"
+          alt="avatar"
           src="https://i1-suckhoe.vnecdn.net/2021/05/14/PHAM5615JPG-1620990867-4838-1620991068.jpg?w=680&amp;h=408&amp;q=100&amp;dpr=1&amp;fit=crop&amp;s=3qxVAMtLFyZBOeNYh7hpvw"
           className={styles.image1}
         />

@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 
 import Helmet from 'react-helmet'
 
-import projectStyles from '../style.module.css'
+import projectStyles from './style.module.css'
 import styles from './signup.module.css'
 
 const Signup = () => {
@@ -35,7 +35,7 @@ const Signup = () => {
         className={` ${projectStyles.thqTextInput} ${styles.textinput5} `}
       />
       <img
-        alt="image"
+        alt="avatar"
         src="https://play.teleporthq.io/static/svg/default-img.svg"
         className={styles.image}
       />
