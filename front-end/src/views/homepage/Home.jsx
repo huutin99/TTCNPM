@@ -55,13 +55,6 @@ class Homepage extends Component {
                         </span>
                         <br></br>
                         <span className="text15">59 ca trong nước, gồm ghi nhận tại</span>
-                        <span className="text16">
-                              <span
-                            dangerouslySetInnerHTML={{
-                              __html: ' ',
-                            }}
-                          />
-                        </span>
                         <br></br>
                         <span className="text18">Bắc Ninh 33, Hà Nội 12, và các tỉnh khác.</span>
                       </span>
