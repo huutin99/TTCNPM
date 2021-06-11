@@ -63,7 +63,7 @@ export default class LoginPage extends React.Component {
                         <Input />
                     </Form.Item>
                     <Form.Item
-                        label="Tài khoản"
+                        label="Username"
                         name="username"
                         rules={[
                             {
@@ -75,7 +75,7 @@ export default class LoginPage extends React.Component {
                         <Input />
                     </Form.Item>
                     <Form.Item
-                        label="Password"
+                        label="Mật khẩu"
                         name="password"
                         rules={[
                             {
@@ -85,6 +85,18 @@ export default class LoginPage extends React.Component {
                         ]}
                     >
                         <Input.Password />
+                    </Form.Item>
+                    <Form.Item
+                        label="Nhập lại mật khẩu"
+                        name="repassword"
+                        rules={[
+                            {
+                                required: true,
+                                message: 'Please type your password again!',
+                            },
+                        ]}
+                    >
+                        <Input.Password />  
                     </Form.Item>
                     <Form.Item
                         label="Email"
