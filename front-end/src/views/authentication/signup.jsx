@@ -62,11 +62,28 @@ export default class LoginPage extends React.Component {
                     >
                         <Input />
                     </Form.Item>
-                    <QuestionGroup questionNumber={2}>
-                            <Question>Giới tính</Question>
-                            <Option value="0">Nam</Option>
-                            <Option value="1">Nữ</Option>
-                    </QuestionGroup>
+                    <Form.Item
+                        label="Giới tính:"
+                        name="sex"
+                        rules={[
+                            {
+                                required: true,
+                                message: 'Please check this option!',
+                            },
+                    >
+                            <div className="radio">
+                                <label>
+                                    <input type="radio" value="option1"/>
+                                     Nam
+                                </label>
+                            </div>
+                            <div className="radio">
+                                <label>
+                                    <input type="radio" value="option2"/>
+                                     Nữ
+                                </label>
+                            </div>
+                    </Form.Item>
                     <Form.Item
                         label="Username"
                         name="username"
