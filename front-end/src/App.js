@@ -1,10 +1,8 @@
 import './App.css';
-
 import React, { lazy } from 'react';
 import 'antd/dist/antd.css';
 import TheLayout from './TheLayout';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
-import AdminPage from './views/admin/AdminPage';
 
 const loading = (
   <div className="pt-3 text-center">
