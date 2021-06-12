@@ -17,7 +17,7 @@ export default class LoginPage extends React.Component {
     componentDidMount = () => {
 
     }
-
+  }
     onFinish = (values) => {
         // console.log('Success:', values);
         if (values.email !== '') {
@@ -27,6 +27,9 @@ export default class LoginPage extends React.Component {
                 return;
             };
         };
+        if (password !== repassword) {
+            alert("Passwords don't match");
+        }
         instance.post('/signup', { ...values })
             .then((response) => {
                 console.log(response);
