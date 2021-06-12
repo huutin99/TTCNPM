@@ -45,7 +45,7 @@ const TheLayout = () => (
                 </Suspense>
             </Route>
         </Content>
-        <Footer style={{ textAlign: 'center' }}>Ant Design ©2018 Created by Ant UED</Footer>
+        <Footer style={{ textAlign: 'center', position: 'fixed', width: '100%', bottom: '0' }}>Ant Design ©2018 Created by Ant UED</Footer>
     </Layout>
 );
 

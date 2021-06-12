@@ -17,8 +17,8 @@ const tailLayout = {
 export default class AddArticle extends React.Component {
     state = {
         title: '',
-        category: [1, 2, 3],
-        chosenCate: '',
+        // category: [1, 2, 3],
+        chosenCate: [],
         content: ''
     }
 
@@ -29,37 +29,42 @@ export default class AddArticle extends React.Component {
     }
 
     onFinish = (values) => {
-        instance.post('/login', { ...values })
+        instance.post('/login', {
+            title: this.state.title,
+            content: this.state.content,
+            category: this.state.chosenCate
+        })
             .then((res) => {
-                console.log(res);
+                message.success(res.data);
             }, (error) => {
-                console.log(error);
+                message.error(error.response.data.message)
             });
     };
     onFinishFailed = (errorInfo) => {
         console.log('Failed:', errorInfo);
     };
 
-    handleChange = (value) => {
-        // console.log(`selected ${value}`);
-        const cate = this.state.chosenCate;
-        this.setState({ chosenCate: cate });
-    }
-
     handleSave = () => {
-        // console.log(this.state);
-        if (this.state.tile === '') {
+        if (this.state.title === '') {
             message.error('Tiêu đề bài viết không thể trống');
             return;
         }
-        instance.post('/article/saveArticle', { ...this.state })
-            .then(res => message.success(res))
-            .catch(err => message.error(err));
+        instance.post('/article/saveArticle', {
+            title: this.state.title,
+            content: this.state.content,
+            category: this.state.chosenCate
+        })
+            .then((res) => {
+                message.success(res.data);
+            }, (error) => {
+                message.error(error.response.data.message)
+            });
     }
 
     render() {
         return (
             <>
+                <h1 style={{ textAlign: 'center', marginTop: '20px' }}>Thêm bài viết</h1>
                 <Form
                     style={{ marginTop: '20px' }}
                     layout='vertical'

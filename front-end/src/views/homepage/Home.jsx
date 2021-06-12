@@ -1,69 +1,70 @@
 import React, { Component } from "react";
 import { Empty } from 'antd';
+import { Link } from "react-router-dom";
 
 class Homepage extends Component {
-    state = {}
+  state = {}
 
-    componentDidMount() {
-        // this.loadData();
-    }
+  componentDidMount() {
+    // this.loadData();
+  }
 
-    render() {
-        return (
-            <>
-                    <div className="container">
-                    <div className="container1">
-                      <h1 className="text">DOTA3VN</h1>
-                      <Link to="/signup" className="thqButton thqLink navlink">
-                        <span className="text01">Đăng ký</span>
-                      </Link>
-                      <Link to="/login" className="thqButton thqLink navlink1">
-                        Đăng nhập
-                      </Link>
-                    </div>
-                    <div className="container2">
-                      <span className="text02">
-                        <span className="text03">NHÚNG TIKTOK VIDEO VÀO WEBSITE</span>
-                      </span>
-                      <img
-                        alt="image"
-                        src="https://static.tuoitre.vn/tto/i/s626/2019/03/14/0d99b255.jpg"
-                        className="image"
-                      />
-                      <span className="text04">
-                        <span className="text05"></span>
-                        <span className="text06"></span>
-                        <span className="text07">
-                          Sau 72h chạy AhaChat Hackathon thì bên mình đã ra được một
-                        </span>
-                        <br></br>
-                        <span className="text09"> MVP đơn giản là nhúng Tiktok Video vào Website</span>
-                      </span>
-                    </div>
-                    <div className="container3">
-                      <span className="text10">
-                        <span className="text11">Thêm 59 ca Covid-19 trong nước</span>
-                      </span>
-                      <img
-                        alt="image"
-                        src="https://i1-suckhoe.vnecdn.net/2021/05/14/PHAM5615JPG-1620990867-4838-1620991068.jpg?w=680&amp;h=408&amp;q=100&amp;dpr=1&amp;fit=crop&amp;s=3qxVAMtLFyZBOeNYh7hpvw"
-                        className="image1"
-                      />
-                      <span className="text12">
-                        <span className="text13">
-                          Bộ Y tế chiều 14/5 ghi nhận 60 ca dương tính nCoV, trong đó
-                        </span>
-                        <br></br>
-                        <span className="text15">59 ca trong nước, gồm ghi nhận tại</span>
-                        <br></br>
-                        <span className="text18">Bắc Ninh 33, Hà Nội 12, và các tỉnh khác.</span>
-                      </span>
-                    </div>
-                    <input type="text" className="thqTextInput textinput" />
-                    <span className="text19">Tìm kiếm...</span>
-                  </div>
-                  <style jsx>
-                    {`
+  render() {
+    return (
+      <>
+        <div className="container">
+          <div className="container1">
+            <h1 className="text">DOTA3VN</h1>
+            <Link to="/signup" className="thqButton thqLink navlink">
+              <span className="text01">Đăng ký</span>
+            </Link>
+            <Link to="/login" className="thqButton thqLink navlink1">
+              Đăng nhập
+            </Link>
+          </div>
+          <div className="container2">
+            <span className="text02">
+              <span className="text03">NHÚNG TIKTOK VIDEO VÀO WEBSITE</span>
+            </span>
+            <img
+              alt="home-img"
+              src="https://static.tuoitre.vn/tto/i/s626/2019/03/14/0d99b255.jpg"
+              className="image"
+            />
+            <span className="text04">
+              <span className="text05"></span>
+              <span className="text06"></span>
+              <span className="text07">
+                Sau 72h chạy AhaChat Hackathon thì bên mình đã ra được một
+              </span>
+              <br></br>
+              <span className="text09"> MVP đơn giản là nhúng Tiktok Video vào Website</span>
+            </span>
+          </div>
+          <div className="container3">
+            <span className="text10">
+              <span className="text11">Thêm 59 ca Covid-19 trong nước</span>
+            </span>
+            <img
+              alt="home-img"
+              src="https://i1-suckhoe.vnecdn.net/2021/05/14/PHAM5615JPG-1620990867-4838-1620991068.jpg?w=680&amp;h=408&amp;q=100&amp;dpr=1&amp;fit=crop&amp;s=3qxVAMtLFyZBOeNYh7hpvw"
+              className="image1"
+            />
+            <span className="text12">
+              <span className="text13">
+                Bộ Y tế chiều 14/5 ghi nhận 60 ca dương tính nCoV, trong đó
+              </span>
+              <br></br>
+              <span className="text15">59 ca trong nước, gồm ghi nhận tại</span>
+              <br></br>
+              <span className="text18">Bắc Ninh 33, Hà Nội 12, và các tỉnh khác.</span>
+            </span>
+          </div>
+          <input type="text" className="thqTextInput textinput" />
+          <span className="text19">Tìm kiếm...</span>
+        </div>
+        <style jsx>
+          {`
                       .container {
                         width: 100%;
                         height: auto;
@@ -264,10 +265,10 @@ class Homepage extends Component {
                         font-family: PT Sans;
                       }
                     `}
-                  </style>
-            </>
-        );
-    };
+        </style>
+      </>
+    );
+  };
 }
 
 export default Homepage;

@@ -1,8 +1,8 @@
-import {FaTimes}from'react-icons/fa'
+import { FaTimes } from 'react-icons/fa'
 const Article = () => {
     return (
         <div>
-            
+
         </div>
     )
 }

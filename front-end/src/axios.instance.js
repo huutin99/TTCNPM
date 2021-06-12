@@ -6,6 +6,7 @@ export const instance = axios.create({
     timeout: 20000,
     headers: {
         // 'X-Custom-Header': 'foobar' 
-        "Access-Control-Allow-Origin": "*"
-    }
+        // "Access-Control-Allow-Origin": "*",
+    },
+    withCredentials: true
 });

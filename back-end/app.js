@@ -3,7 +3,7 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
-var cors = require('cors')
+var cors = require('cors');
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
@@ -23,14 +23,33 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
-app.use(cors())
+app.use(cors({ credentials: true, origin: true }));
 
+// app.use(injectUser);
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/admin', adminRouter);
 app.use('/signup', signupRouter);
 app.use('/login', loginRouter);
-app.use('/article', articleRouter);
+app.use('/article', injectUser, articleRouter);
+
+const { pool } = require('./queries');
+async function injectUser(req, res, next) {
+  try {
+    // console.log(req.cookies)
+    const user = await pool.query(`
+      SELECT * FROM "user" u
+      INNER JOIN "user_session" us
+      ON us.uid = u.id
+      WHERE us.id = '${req.cookies.token}'
+    `);
+    // console.log(user.rows[0]);
+    req.user = user.rows[0];
+    next();
+  } catch (error) {
+    return next(error)
+  }
+}
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {

@@ -1,13 +1,15 @@
 import { Form, Input, Button, Alert, message, Space } from 'antd';
 import React from 'react';
 import { instance } from '../../axios.instance';
+import Cookies from 'universal-cookie';
+const cookies = new Cookies();
 
 const layout = {
     labelCol: { span: 8 },
     wrapperCol: { span: 8 },
 };
 const tailLayout = {
-    wrapperCol: { offset: 8, span: 16 },
+    wrapperCol: { offset: 10, span: 14 },
 };
 
 export default class LoginPage extends React.Component {
@@ -19,12 +21,13 @@ export default class LoginPage extends React.Component {
     }
 
     onFinish = (values) => {
+        console.log(values);
         instance.post('/login', { ...values })
             .then((res) => {
-                console.log(res);
-            }, (error) => {
-                console.log(error);
-            });
+                message.success(res.data.mes);
+                cookies.set('token', res.data.token, { path: '/', maxAge: 6 * 60 * 60, httpOnly: false, secure: false, sameSite: false });
+            })
+            .catch((error) => message.error(error.response.data.message))
     };
     onFinishFailed = (errorInfo) => {
         console.log('Failed:', errorInfo);
@@ -68,8 +71,8 @@ export default class LoginPage extends React.Component {
                     </Form.Item>
                     <Form.Item {...tailLayout}>
                         <Button type="primary" htmlType="submit">
-                            Gửi
-                    </Button>
+                            Đăng nhập
+                        </Button>
                     </Form.Item>
                 </Form>
             </>
