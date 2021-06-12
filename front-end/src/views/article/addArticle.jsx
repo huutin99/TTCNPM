@@ -3,6 +3,7 @@ import React from 'react';
 import { instance } from '../../axios.instance';
 import { CKEditor } from '@ckeditor/ckeditor5-react';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
+import { Redirect } from 'react-router-dom';
 
 const { Option } = Select;
 
@@ -25,7 +26,7 @@ export default class AddArticle extends React.Component {
     componentDidMount = () => {
         instance.get('/article/topic', {})
             .then(res => this.setState({ category: res.data.map(i => (<Option key={i.value}>{i.label}</Option>)) }))
-            .catch(err => console.log(err))
+            .catch(err => console.log(err.response.data.message))
     }
 
     onFinish = (values) => {
@@ -62,6 +63,14 @@ export default class AddArticle extends React.Component {
     }
 
     render() {
+        if (localStorage.getItem('user') === null) {
+            message.error('Bạn chưa đăng nhập');
+            return <Redirect to="/" />
+        }
+        if (JSON.parse(localStorage.getItem('user')).role === 'reader') {
+            message.error('Bạn không thể thực hiện chức năng này');
+            return <Redirect to="/" />;
+        }
         return (
             <>
                 <h1 style={{ textAlign: 'center', marginTop: '20px' }}>Thêm bài viết</h1>

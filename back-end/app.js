@@ -10,6 +10,7 @@ var usersRouter = require('./routes/users');
 var adminRouter = require('./routes/admin');
 var signupRouter = require('./routes/signup');
 var loginRouter = require('./routes/login');
+var logoutRouter = require('./routes/logout');
 var articleRouter = require('./routes/article');
 
 var app = express();
@@ -31,6 +32,7 @@ app.use('/users', usersRouter);
 app.use('/admin', adminRouter);
 app.use('/signup', signupRouter);
 app.use('/login', loginRouter);
+app.use('/logout', injectUser, logoutRouter);
 app.use('/article', injectUser, articleRouter);
 
 const { pool } = require('./queries');

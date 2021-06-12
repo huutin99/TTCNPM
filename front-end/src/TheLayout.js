@@ -1,12 +1,15 @@
 import './App.css';
 
 import React, { Suspense } from 'react';
-import { Route, Switch, Redirect } from 'react-router-dom';
-import { Layout, Menu, Breadcrumb } from 'antd';
+import { Route, Switch, Redirect, Link } from 'react-router-dom';
+import { Layout, Menu, Button, message } from 'antd';
 import 'antd/dist/antd.css';
-import routes from './routes'
+import routes from './routes';
+import { connect } from 'react-redux';
+import { instance } from './axios.instance';
 
 const { Header, Content, Footer } = Layout;
+const { SubMenu } = Menu;
 
 const loading = (
     <div className="pt-3 text-center">
@@ -14,14 +17,55 @@ const loading = (
     </div>
 )
 
-const TheLayout = () => (
-    <Layout>
+const handleLogout = () => {
+    // console.log('here')
+    instance.post('/logout', {})
+        .then(res => message.success(res.data))
+        .catch(err => message.error(err.response.data.message));
+    localStorage.removeItem('user');
+}
+
+const TheLayout = (props) => {
+    // console.log(localStorage.getItem('user'));
+    return <Layout>
         <Header style={{ position: 'fixed', zIndex: 1, width: '100%' }}>
             <div className="logo" />
             <Menu theme="dark" mode="horizontal">
                 <Menu.Item key="1">Trang chủ</Menu.Item>
                 <Menu.Item key="2">Mới nhất</Menu.Item>
                 <Menu.Item key="3">Nổi bật</Menu.Item>
+                {localStorage.getItem('user') ?
+                    <>
+                        <Menu.Item key="4" style={{ float: 'right' }}>
+                            <Button type="link" size='large' href='/' onClick={handleLogout}>
+                                Đăng xuất
+                            </Button>
+                        </Menu.Item>
+                        {JSON.parse(localStorage.getItem('user')).role !== 'reader' &&
+                            <>
+                                {JSON.parse(localStorage.getItem('user')).role === 'writer' ?
+                                    <Menu.Item key="5" style={{ float: 'right' }}>Quản lý bài viết</Menu.Item> :
+                                    <SubMenu style={{ float: 'right' }} title={<span>Công cụ</span>}>
+                                        <Menu.Item key="setting:1">Quản lý bài viết</Menu.Item>
+                                        <Menu.Item key="setting:2"><Link to="/admin" />Quản lý hệ thống</Menu.Item>
+                                    </SubMenu>
+                                }
+                            </>
+                        }
+                    </> :
+                    <>
+                        <Menu.Item key="4" style={{ float: 'right' }}>
+                            <Button type="link" size='large' href='/login'>
+                                Đăng nhập
+                            </Button>
+                        </Menu.Item>
+                        <Menu.Item key="5" style={{ float: 'right' }}>
+                            <Button type="link" size='large' href='/signup'>
+                                Đăng ký
+                            </Button>
+                        </Menu.Item>
+                    </>
+                }
             </Menu>
         </Header>
         <Content className="site-layout" style={{ padding: '0 50px', marginTop: 64 }}>
@@ -45,8 +89,16 @@ const TheLayout = () => (
                 </Suspense>
             </Route>
         </Content>
-        <Footer style={{ textAlign: 'center', position: 'fixed', width: '100%', bottom: '0' }}>Ant Design ©2018 Created by Ant UED</Footer>
+        <Footer style={{ textAlign: 'center', position: 'fixed', width: '100%', bottom: '0' }}>Thực tập công nghệ phần mềm 2021</Footer>
     </Layout>
-);
+}
 
-export default TheLayout;
+    ;
+
+const mapStateToProps = (state) => {
+    return {
+        user: state.user
+    }
+}
+
+export default connect(mapStateToProps, null)(TheLayout);

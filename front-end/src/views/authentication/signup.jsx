@@ -17,7 +17,6 @@ export default class LoginPage extends React.Component {
     componentDidMount = () => {
 
     }
-  }
     onFinish = (values) => {
         // console.log('Success:', values);
         if (values.email !== '') {
@@ -27,7 +26,7 @@ export default class LoginPage extends React.Component {
                 return;
             };
         };
-        if (password !== repassword) {
+        if (values.password !== values.repassword) {
             alert("Passwords don't match");
         }
         instance.post('/signup', { ...values })
@@ -73,19 +72,20 @@ export default class LoginPage extends React.Component {
                                 required: true,
                                 message: 'Please check this option!',
                             },
+                        ]}
                     >
-                            <div className="radio">
-                                <label>
-                                    <input type="radio" value="option1"/>
-                                     Nam
-                                </label>
-                            </div>
-                            <div className="radio">
-                                <label>
-                                    <input type="radio" value="option2"/>
-                                     Nữ
-                                </label>
-                            </div>
+                        <div className="radio">
+                            <label>
+                                <input type="radio" value="option1" />
+                                Nam
+                            </label>
+                        </div>
+                        <div className="radio">
+                            <label>
+                                <input type="radio" value="option2" />
+                                Nữ
+                            </label>
+                        </div>
                     </Form.Item>
                     <Form.Item
                         label="Username"
@@ -121,7 +121,7 @@ export default class LoginPage extends React.Component {
                             },
                         ]}
                     >
-                        <Input.Password />  
+                        <Input.Password />
                     </Form.Item>
                     <Form.Item
                         label="Email"
@@ -138,7 +138,7 @@ export default class LoginPage extends React.Component {
                     <Form.Item {...tailLayout}>
                         <Button type="primary" htmlType="submit">
                             Gửi
-                    </Button>
+                        </Button>
                     </Form.Item>
                 </Form>
             </>

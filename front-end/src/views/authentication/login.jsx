@@ -2,6 +2,10 @@ import { Form, Input, Button, Alert, message, Space } from 'antd';
 import React from 'react';
 import { instance } from '../../axios.instance';
 import Cookies from 'universal-cookie';
+import { connect } from 'react-redux';
+import * as actions from '../../actions/index';
+import { Redirect } from 'react-router-dom';
+
 const cookies = new Cookies();
 
 const layout = {
@@ -9,10 +13,10 @@ const layout = {
     wrapperCol: { span: 8 },
 };
 const tailLayout = {
-    wrapperCol: { offset: 10, span: 14 },
+    wrapperCol: { offset: 0, span: 24 },
 };
 
-export default class LoginPage extends React.Component {
+class LoginPage extends React.Component {
     state = {
     }
 
@@ -21,11 +25,13 @@ export default class LoginPage extends React.Component {
     }
 
     onFinish = (values) => {
-        console.log(values);
+        // console.log(values);
         instance.post('/login', { ...values })
             .then((res) => {
+                // console.log(res.data.user);
                 message.success(res.data.mes);
                 cookies.set('token', res.data.token, { path: '/', maxAge: 6 * 60 * 60, httpOnly: false, secure: false, sameSite: false });
+                this.props.onAddUser(res.data.user);
             })
             .catch((error) => message.error(error.response.data.message))
     };
@@ -33,8 +39,10 @@ export default class LoginPage extends React.Component {
         console.log('Failed:', errorInfo);
     };
     render() {
+        if (localStorage.getItem('user') !== null) return <Redirect to="/" />
         return (
             <>
+                <h1 style={{ marginTop: '20px', textAlign: 'center' }}>Đăng nhập</h1>
                 <Form
                     style={{ marginTop: '20px' }}
                     {...layout}
@@ -58,7 +66,7 @@ export default class LoginPage extends React.Component {
                         <Input />
                     </Form.Item>
                     <Form.Item
-                        label="Password"
+                        label="Mật khẩu"
                         name="password"
                         rules={[
                             {
@@ -69,7 +77,7 @@ export default class LoginPage extends React.Component {
                     >
                         <Input.Password />
                     </Form.Item>
-                    <Form.Item {...tailLayout}>
+                    <Form.Item {...tailLayout} style={{ textAlign: 'center' }}>
                         <Button type="primary" htmlType="submit">
                             Đăng nhập
                         </Button>
@@ -79,3 +87,17 @@ export default class LoginPage extends React.Component {
         )
     }
 }
+
+const mapStateToProps = state => {
+    return {}
+}
+
+const mapDispatchToProps = (dispatch, props) => {
+    return {
+        onAddUser: user => {
+            dispatch(actions.addUser(user))
+        }
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(LoginPage);
