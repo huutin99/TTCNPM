@@ -62,6 +62,11 @@ export default class LoginPage extends React.Component {
                     >
                         <Input />
                     </Form.Item>
+                    <QuestionGroup questionNumber={2}>
+                            <Question>Giới tính</Question>
+                            <Option value="0">Nam</Option>
+                            <Option value="1">Nữ</Option>
+                    </QuestionGroup>
                     <Form.Item
                         label="Username"
                         name="username"
