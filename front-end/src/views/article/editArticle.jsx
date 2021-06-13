@@ -7,20 +7,10 @@ import { Redirect } from 'react-router-dom';
 import { LoadingOutlined, PlusOutlined } from '@ant-design/icons';
 
 const { Option } = Select;
-const { Dragger } = Upload;
-
-const layout = {
-    labelCol: { span: 4 },
-    wrapperCol: { span: 18 },
-};
-const tailLayout = {
-    wrapperCol: { offset: 12, span: 12 },
-};
 
 export default class AddArticle extends React.Component {
     state = {
         title: '',
-        // category: [1, 2, 3],
         chosenCate: [],
         content: '',
         summary: '',
@@ -28,10 +18,36 @@ export default class AddArticle extends React.Component {
         imgSrc: ''
     }
 
+    formRef = React.createRef();
+
     componentDidMount = () => {
         instance.get('/article/topic', {})
-            .then(res => this.setState({ category: res.data.map(i => (<Option key={i.value}>{i.label}</Option>)) }))
-            .catch(err => console.log(err.response.data.message))
+            .then(res => this.setState({ category: res.data.map(i => (<Option key={i.value} value={i.value}>{i.label}</Option>)) }))
+            .catch(err => console.log(err.response.data.message));
+        this.getArticleData()
+    }
+
+    getArticleData = () => {
+        instance.get('/article/edit?id=' + this.props.match.params.id, {})
+            .then(res => {
+                // console.log('hasdfyqieuwryi', res.data);
+                this.setState({
+                    title: res.data.title,
+                    content: res.data.content,
+                    summary: res.data.summary,
+                    imgSrc: res.data.image,
+                    chosenCate: res.data.topic,
+                    oldCate: JSON.parse(JSON.stringify(res.data.topic))
+                });
+                // console.log(res.data.topic);
+                this.formRef.current.setFieldsValue({
+                    title: res.data.title,
+                    content: res.data.content,
+                    summary: res.data.summary,
+                    category: res.data.topic[0] ? res.data.topic : []
+                });
+            })
+            .catch(err => message.error(err.response.data.message));
     }
 
     getBase64 = (img, callback) => {
@@ -74,11 +90,13 @@ export default class AddArticle extends React.Component {
             message.error('Tiêu đề bài viết không thể trống');
             return;
         }
-        // console.log(this.state.imgSrc);
-        instance.post('/article/saveArticle', {
+        // console.log(this.state);
+        instance.post('/article/saveEditedArticle', {
+            id: this.props.match.params.id,
             title: this.state.title,
             content: this.state.content,
             category: this.state.chosenCate,
+            oldCate: this.state.oldCate,
             summary: this.state.summary,
             image: this.state.imgSrc
         })
@@ -115,6 +133,7 @@ export default class AddArticle extends React.Component {
                     initialValues={{
                         remember: true,
                     }}
+                    ref={this.formRef}
                 >
                     <Form.Item
                         label="Tiêu đề"
@@ -126,12 +145,12 @@ export default class AddArticle extends React.Component {
                             },
                         ]}
                     >
-                        <Input onChange={e => this.setState({ title: e.target.value })} />
+                        <Input onChange={e => this.setState({ title: e.target.value })} value={this.state.title} />
                     </Form.Item>
                     <Form.Item
                         name='summary'
                         label="Tóm tắt">
-                        <Input.TextArea onChange={e => this.setState({ summary: e.target.value })} />
+                        <Input.TextArea onChange={e => this.setState({ summary: e.target.value })} value={this.state.summary} />
                     </Form.Item>
                     <Form.Item
                         name='image'
@@ -145,7 +164,7 @@ export default class AddArticle extends React.Component {
                             beforeUpload={this.beforeUpload}
                             onChange={this.handleChange}
                         >
-                            {imageUrl ? <img src={imageUrl} alt="avatar" style={{ width: '100%' }} /> : uploadButton}
+                            {imageUrl || this.state.imgSrc ? <img src={this.state.imgSrc} alt="avatar" style={{ width: '100%' }} /> : uploadButton}
                         </Upload>
                     </Form.Item>
                     <Form.Item
@@ -164,6 +183,7 @@ export default class AddArticle extends React.Component {
                             style={{ width: '100%' }}
                             placeholder="Please select"
                             onChange={e => this.setState({ chosenCate: e })}
+                            defaultValue={this.state.chosenCate}
                         >
                             {this.state.category}
                         </Select>
@@ -180,7 +200,7 @@ export default class AddArticle extends React.Component {
                     >
                         <CKEditor
                             editor={ClassicEditor}
-                            data="<p>Nội dung bài viết</p>"
+                            data={this.state.content}
                             onReady={editor => {
                                 // You can store the "editor" and use when it is needed.
                                 // console.log('Editor is ready to use!', editor);

@@ -5,6 +5,9 @@ import {
     PieChartOutlined,
     FileOutlined,
 } from '@ant-design/icons';
+import ManageUser from "./manageUser";
+import ManageArticle from "./manageArticle";
+import ManageTopic from "./manageTopic";
 
 import './style.css';
 import { instance } from '../../axios.instance';
@@ -14,6 +17,7 @@ const { Content, Sider } = Layout;
 class AdminPage extends Component {
     state = {
         collapsed: false,
+        manage: 1
     };
 
     componentDidMount = () => {
@@ -39,39 +43,33 @@ class AdminPage extends Component {
     render() {
         return (
             <>
-                <Layout>
-                    <Sider collapsible collapsed={this.state.collapsed} onCollapse={this.onCollapse}>
-                        <div className="logo" />
-                        <Menu theme="dark" defaultSelectedKeys={['1']} mode="inline">
-                            <Menu.Item key="1" icon={<PieChartOutlined />}>
-                                Quản lý người dùng
-                            </Menu.Item>
-                            <Menu.Item key="2" icon={<DesktopOutlined />}>
-                                Quản lý bài viết
-                            </Menu.Item>
-                            <Menu.Item key="9" icon={<FileOutlined />}>
-                                Quản lý chủ đề
-                            </Menu.Item>
-                        </Menu>
-                    </Sider>
-                    <Layout style={{ padding: '0 24px 24px' }}>
-                        <Breadcrumb style={{ margin: '16px 0' }}>
-                            <Breadcrumb.Item>Admin</Breadcrumb.Item>
-                            {/* <Breadcrumb.Item>List</Breadcrumb.Item>
-                            <Breadcrumb.Item>App</Breadcrumb.Item> */}
-                        </Breadcrumb>
-                        <Content
-                            className="site-layout-background"
-                            style={{
-                                padding: 24,
-                                margin: 0,
-                                minHeight: 280,
-                            }}
-                        >
-                            Content
+                <Content style={{ padding: '0 50px', height: '80vh' }}>
+                    <Layout className="site-layout-background" style={{ padding: '24px 0' }}>
+                        <Sider className="site-layout-background" width={200}>
+                            <Menu mode="inline"
+                                defaultSelectedKeys={['1']}
+                                defaultOpenKeys={['sub1']}
+                                style={{ height: '100%' }}
+                                onClick={e => this.setState({ manage: e.key })}
+                            >
+                                <Menu.Item key="1" icon={<PieChartOutlined />}>
+                                    Quản lý người dùng
+                                </Menu.Item>
+                                <Menu.Item key="2" icon={<DesktopOutlined />}>
+                                    Quản lý bài viết
+                                </Menu.Item>
+                                <Menu.Item key="3" icon={<FileOutlined />}>
+                                    Quản lý chủ đề
+                                </Menu.Item>
+                            </Menu>
+                        </Sider>
+                        <Content style={{ padding: '0 24px', minHeight: 280, height: '81vh', overflow: 'scroll' }}>
+                            {this.state.manage === '1' && <ManageUser />}
+                            {this.state.manage === '2' && <ManageArticle />}
+                            {this.state.manage === '3' && <ManageTopic />}
                         </Content>
                     </Layout>
-                </Layout>
+                </Content>
             </>
         );
     };

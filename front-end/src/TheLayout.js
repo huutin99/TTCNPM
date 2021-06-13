@@ -7,9 +7,11 @@ import 'antd/dist/antd.css';
 import routes from './routes';
 import { connect } from 'react-redux';
 import { instance } from './axios.instance';
+import Cookies from 'universal-cookie';
 
 const { Header, Content, Footer } = Layout;
 const { SubMenu } = Menu;
+const cookies = new Cookies();
 
 const loading = (
     <div className="pt-3 text-center">
@@ -26,7 +28,11 @@ const handleLogout = () => {
 }
 
 const TheLayout = (props) => {
-    // console.log(localStorage.getItem('user'));
+    // console.log(cookies.get('token'));
+    if (!cookies.get('token')) {
+        // console.log('heooe')
+        localStorage.removeItem('user');
+    }
     return <Layout>
         <Header style={{ position: 'fixed', zIndex: 1, width: '100%' }}>
             <div className="logo" />
@@ -34,7 +40,7 @@ const TheLayout = (props) => {
                 <Menu.Item key="1">Trang chủ</Menu.Item>
                 <Menu.Item key="2">Mới nhất</Menu.Item>
                 <Menu.Item key="3">Nổi bật</Menu.Item>
-                {localStorage.getItem('user') ?
+                {localStorage.getItem('user') && cookies.get('token') ?
                     <>
                         <Menu.Item key="4" style={{ float: 'right' }}>
                             <Button type="link" size='large' href='/' onClick={handleLogout}>
@@ -44,9 +50,9 @@ const TheLayout = (props) => {
                         {JSON.parse(localStorage.getItem('user')).role !== 'reader' &&
                             <>
                                 {JSON.parse(localStorage.getItem('user')).role === 'writer' ?
-                                    <Menu.Item key="5" style={{ float: 'right' }}>Quản lý bài viết</Menu.Item> :
+                                    <Menu.Item key="5" style={{ float: 'right' }}><Link to="/article/manage" />Quản lý bài viết</Menu.Item> :
                                     <SubMenu style={{ float: 'right' }} title={<span>Công cụ</span>}>
-                                        <Menu.Item key="setting:1">Quản lý bài viết</Menu.Item>
+                                        <Menu.Item key="setting:1"><Link to="/article/manage" />Quản lý bài viết</Menu.Item>
                                         <Menu.Item key="setting:2"><Link to="/admin" />Quản lý hệ thống</Menu.Item>
                                     </SubMenu>
                                 }
@@ -68,7 +74,7 @@ const TheLayout = (props) => {
                 }
             </Menu>
         </Header>
-        <Content className="site-layout" style={{ padding: '0 50px', marginTop: 64 }}>
+        <Content className="site-layout" style={{ padding: '0 50px', marginTop: 64, marginBottom: '70px' }}>
             <Route>
                 <Suspense>
                     <Switch>
@@ -84,12 +90,12 @@ const TheLayout = (props) => {
                                     )} />
                             )
                         })}
-                        <Redirect from="/" to="/dashboard" />
+                        <Redirect from="/" to="/" />
                     </Switch>
                 </Suspense>
             </Route>
         </Content>
-        <Footer style={{ textAlign: 'center', position: 'fixed', width: '100%', bottom: '0' }}>Thực tập công nghệ phần mềm 2021</Footer>
+        <Footer style={{ textAlign: 'center', position: 'fixed', width: '100%', bottom: '0', backgroundColor: '#001529', color: 'lightgray', height: '70px' }}>Thực tập công nghệ phần mềm 2021</Footer>
     </Layout>
 }
 

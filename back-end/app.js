@@ -4,6 +4,8 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 var cors = require('cors');
+var multer = require('multer')
+var upload = multer({ dest: 'public/images' });
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
@@ -12,6 +14,7 @@ var signupRouter = require('./routes/signup');
 var loginRouter = require('./routes/login');
 var logoutRouter = require('./routes/logout');
 var articleRouter = require('./routes/article');
+var uploadRouter = require('./routes/upload');
 
 var app = express();
 
@@ -23,7 +26,7 @@ app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
-app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(path.join(__dirname, 'public/')));
 app.use(cors({ credentials: true, origin: true }));
 
 // app.use(injectUser);
@@ -34,6 +37,7 @@ app.use('/signup', signupRouter);
 app.use('/login', loginRouter);
 app.use('/logout', injectUser, logoutRouter);
 app.use('/article', injectUser, articleRouter);
+app.use('/uploadImage', upload.single('avatar'), uploadRouter);
 
 const { pool } = require('./queries');
 async function injectUser(req, res, next) {
