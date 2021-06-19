@@ -150,7 +150,7 @@ export default class EditArticle extends React.Component {
         
         return (
             <>
-                <h1 style={{ textAlign: 'center', marginTop: '20px' }}>Thêm bài viết</h1>
+                <h1 style={{ textAlign: 'center', marginTop: '20px' }}>Chỉnh sửa bài viết</h1>
                 <Form
                     style={{ marginTop: '20px' }}
                     layout='vertical'
