@@ -5,6 +5,7 @@ import { CKEditor } from '@ckeditor/ckeditor5-react';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import { Redirect } from 'react-router-dom';
 import { LoadingOutlined, PlusOutlined } from '@ant-design/icons';
+import Grid from '@material-ui/core/Grid';
 import 'antd/dist/antd.css';
 
 const { Option } = Select;
@@ -150,8 +151,10 @@ export default class EditArticle extends React.Component {
         
         return (
             <>
-                
-                <h1 style={{ textAlign: 'center', marginTop: '20px' }}>Chỉnh sửa bài viết</h1>
+                <Grid item xs={12}>
+                    <h1 style={{ textAlign: 'center', marginTop: '20px' }}>Chỉnh sửa bài viết</h1>
+                </Grid>
+                <Grid item xs={12}>
                 <Form
                     style={{ marginTop: '20px' }}
                     layout='vertical'
@@ -248,6 +251,8 @@ export default class EditArticle extends React.Component {
                         <Button type="primary" onClick={this.handleSave}>Submit</Button>
                     </Form.Item>
                 </Form>
+                </Grid>
+                
             </>
         )
     }
