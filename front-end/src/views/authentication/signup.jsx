@@ -69,7 +69,7 @@ export default class LoginPage extends React.Component {
                         name="sex"
                         rules={[
                             {
-                                required: true,
+                                required: false,
                                 message: 'Please check this option!',
                             },
                         ]}

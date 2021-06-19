@@ -5,7 +5,9 @@ const { pool } = require('../queries');
 
 /* GET users listing. */
 router.post('/', async (req, res) => {
+    console.log("i'm just running")
     try {
+        console.log("i'm just running")
         const user = await pool.query(`SELECT * FROM "user" WHERE username = '${req.body.username}' AND password = '${req.body.password}'`);
         if (user.rowCount === 0) throw BadRequest('Thông tin đăng nhập sai');
         let lifetime = new Date();
