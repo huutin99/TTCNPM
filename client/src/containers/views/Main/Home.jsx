@@ -23,7 +23,6 @@ import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
 import ListItemText from '@material-ui/core/ListItemText';
 import FolderIcon from '@material-ui/icons/Folder';
 import { message, Input } from 'antd';
-
 const { Search } = Input;
 
 const useStyles = theme => ({
@@ -59,7 +58,8 @@ class Home extends React.Component {
   }
   renderTopic = () =>
     this.state.allTopic.map(item => (
-      <MenuItem>{item.label}</MenuItem>
+      <MenuItem><Link style={{ color: "black", flexGrow: 1, textDecoration: 'none', fontSize: "20px" }}
+        to={"/topic/" + item.id}>{item.label}</Link></MenuItem>
     ));
 
   getPost = () => {
@@ -128,7 +128,7 @@ class Home extends React.Component {
     return (
       <>
         <div style={{ width: '100%', textAlign: 'left', marginTop: '20px' }}>
-        <Search placeholder="input search text" onSearch={this.onSearch} style={{ width: 200 }} />
+          <Search placeholder="input search text" onSearch={this.onSearch} style={{ width: 200 }} />
         </div>
         <h1>Bài viết mới nhất</h1>
         <Grid container spacing={3}>
