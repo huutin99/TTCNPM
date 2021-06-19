@@ -12,6 +12,16 @@ router.get('/topic', async (req, res) => {
     }
 });
 
+router.get('/topicdetail', async (req, res) => {
+    try {
+        // console.log(req.user);
+        const topic = await pool.query(`SELECT * FROM "topic" WHERE id = '${req.query.tid}'`);
+        return res.status(200).json(topic.rows);
+    } catch (error) {
+        return res.send(error);
+    }
+});
+
 router.get('/allComment', async (req, res) => {
     try {
         // console.log(req.user);
@@ -64,9 +74,50 @@ router.post('/delete', async (req, res) => {
     try {
         await pool.query(`
             DELETE FROM article
-            WHERE id = '${req.id}'
+            WHERE id = '${req.body.id}'
         `);
         return res.status(200).send('Đã xóa bài viết');
+    } catch (error) {
+        console.log(error)
+        return res.send(error);
+    }
+});
+router.post('/deleteuser', async (req, res) => {
+    try {
+        await pool.query(`
+            DELETE FROM "user"
+            WHERE id = '${req.body.id}'
+        `);
+        return res.status(200).send('Đã xóa bài viết');
+    } catch (error) {
+        console.log(error)
+        return res.send(error);
+    }
+});
+router.post('/deletetopic', async (req, res) => {
+    try {
+        await pool.query(`
+            DELETE FROM "topic"
+            WHERE id = '${req.body.id}'
+        `);
+        return res.status(200).send('Đã xóa bài viết');
+    } catch (error) {
+        console.log(error)
+        return res.send(error);
+    }
+});
+
+router.get('/topicArticle', async (req, res) => {
+    try {
+        // console.log(req.user);
+        const topic = await pool.query(`
+            SELECT *
+            FROM mn_article_topic mn
+            JOIN article a ON a.id = mn.aid
+            WHERE mn.tid = '${req.query.tid}'
+        `);
+
+        return res.status(200).json(topic.rows);
     } catch (error) {
         console.log(error)
         return res.send(error);
@@ -84,7 +135,7 @@ router.get('/authoredArticle', async (req, res) => {
         for (let i of articles.rows) {
             // console.log('here')
             const topic = await pool.query(`
-                SELECT t.value, t.label 
+                SELECT t.id t.value, t.label 
                 FROM mn_article_topic mn 
                 INNER JOIN topic t
                 ON mn.tid = t.id
@@ -125,52 +176,27 @@ router.get('/allArticle', async (req, res) => {
     }
 });
 
-router.get('/searchedArticle', async (req, res) => {
-    try {
-        // console.log(req.user);
-        const articles = await pool.query(`
-            SELECT * FROM article
-            WHERE title LIKE '%${req.query.text}%'
-        `);
-        // console.log(articles.rows.length)
-        // for (let i of articles.rows) {
-        //     // console.log('here')
-        //     const topic = await pool.query(`
-        //         SELECT t.value, t.label 
-        //         FROM mn_article_topic mn 
-        //         INNER JOIN topic t
-        //         ON mn.tid = t.id
-        //     `);
-        //     i.topic = topic.rows;
-        //     // console.log(topic.rows);
-        // }
-        return res.status(200).json(articles.rows);
-    } catch (error) {
-        console.log(error)
-        return res.send(error);
-    }
-});
-
 router.post('/rate', async (req, res) => {
     try {
+
         const ratee = await pool.query(`
             SELECT * FROM rating
             WHERE uid = '${req.body.muid}'
         `);
-        var check = 0;
-        for (let i of ratee.rows) {
-            if (req.body.maid == i.aid) {
+        var check=0;
+        for( let i of ratee.rows){
+            if(req.body.maid == i.aid){
                 check++;
                 break;
             }
         }
-        if (check == 0) {
+        if(check == 0) {
             const rate = await pool.query(`
             INSERT INTO rating (uid, aid, rating) 
             VALUES ('${req.body.muid}', '${req.body.maid}', ${req.body.mrating});
         `);
         }
-        else {
+        else{
             const change = await pool.query(`
             UPDATE rating
             SET rating = ${req.body.mrating}
@@ -186,7 +212,7 @@ router.post('/rate', async (req, res) => {
 router.post('/comment', async (req, res) => {
     try {
 
-        const rate = await pool.query(`
+            const rate = await pool.query(`
             INSERT INTO comment (uid, aid, content) 
             VALUES ('${req.body.muid}', '${req.body.maid}', '${req.body.mcontent}');
         `);
@@ -272,6 +298,24 @@ router.post('/saveEditedArticle', async (req, res) => {
     }
 });
 
+router.post('/saveEditedUser', async (req, res) => {
+    try {
+        const article = await pool.query(`
+            UPDATE "user"
+            SET username = '${req.body.username}', 
+                password = '${req.body.password}', 
+                name = '${req.body.name}',
+                email = '${req.body.email}',
+                role = '${req.body.role}'
+            WHERE id = '${req.body.id}'
+        `)
+        return res.send('Đã sửa bài viết');
+    } catch (error) {
+        console.log(error)
+        return res.status(400).send(error);
+    }
+});
+
 router.get('/edit', async (req, res) => {
     try {
         // console.log(req.query);
@@ -286,6 +330,48 @@ router.get('/edit', async (req, res) => {
         const article = { ...data.rows[0], topic: data.rows.map(i => (i.value)) }
         // console.log(data.rows);
         return res.status(200).json(article);
+    } catch (error) {
+        console.log(error)
+        return res.send(error);
+    }
+});
+
+router.get('/edituser', async (req, res) => {
+    try {
+        // console.log(req.query);
+        const data = await pool.query(`
+            SELECT * FROM "user"
+            WHERE id = '${req.query.id}'
+        `);
+        const article = { ...data.rows[0]}
+        // console.log(data.rows);
+        return res.status(200).json(article);
+    } catch (error) {
+        console.log(error)
+        return res.send(error);
+    }
+});
+
+router.get('/searchedArticle', async (req, res) => {
+    try {
+        // console.log(req.user);
+        const articles = await pool.query(`
+            SELECT * FROM article
+            WHERE title LIKE '%${req.query.text}%'
+        `);
+        // console.log(articles.rows.length)
+        // for (let i of articles.rows) {
+        //     // console.log('here')
+        //     const topic = await pool.query(`
+        //         SELECT t.value, t.label 
+        //         FROM mn_article_topic mn 
+        //         INNER JOIN topic t
+        //         ON mn.tid = t.id
+        //     `);
+        //     i.topic = topic.rows;
+        //     // console.log(topic.rows);
+        // }
+        return res.status(200).json(articles.rows);
     } catch (error) {
         console.log(error)
         return res.send(error);
