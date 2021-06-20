@@ -14,7 +14,7 @@ router.post('/', async (req, res) => {
         lifetime.setHours(lifetime.getHours() + 6);
         const session = await pool.query(`INSERT INTO "user_session" (uid, lifetime) VALUES ('${user.rows[0].id}', to_timestamp(${Math.round(lifetime.getTime() / 1000)})) RETURNING *`);
         // const session = await pool.query(`SELECT "id" FROM "user_session" WHERE uid = '${user.rows[0].id}' AND lifetime = to_timestamp(${Math.round(lifetime.getTime() / 1000)})`);
-        return res.json({ mes: 'Đăng nhập thành công', token: session.rows[0].id, user: { name: user.rows[0].name, email: user.rows[0].email, role: user.rows[0].role } });
+        return res.json({ mes: 'Đăng nhập thành công', token: session.rows[0].id, user: { id : user.rows[0].id , name: user.rows[0].name, email: user.rows[0].email, role: user.rows[0].role } });
     } catch (error) {
         return res.status(400).send(error);
     }

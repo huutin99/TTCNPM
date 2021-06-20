@@ -5,7 +5,22 @@ var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 var cors = require('cors');
 var multer = require('multer')
-var upload = multer({ dest: 'public/images' });
+
+
+const storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+      cb(null, 'public/images')
+  },
+  filename: function (req, file, cb) {
+      // You could rename the file name
+      // cb(null, file.fieldname + '-' + Date.now() + path.extname(file.originalname))
+
+      // You could use the original name
+      cb(null, file.originalname)
+  }
+});
+var upload = multer({storage: storage});
+
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
@@ -26,8 +41,7 @@ app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
-app.use(express.static(path.join(__dirname, 'public/')));
-app.use(cors({ credentials: true, origin: true }));
+app.use(cors());
 
 // app.use(injectUser);
 app.use('/', indexRouter);
@@ -36,8 +50,28 @@ app.use('/admin', adminRouter);
 app.use('/signup', signupRouter);
 app.use('/login', loginRouter);
 app.use('/logout', injectUser, logoutRouter);
-app.use('/article', injectUser, articleRouter);
+app.use('/article', articleRouter);
 app.use('/uploadImage', upload.single('avatar'), uploadRouter);
+
+app.get('/images/:name?', function (req, res, next) {
+  var options = {
+    root: path.join(__dirname, 'public/images'),
+    dotfiles: 'deny',
+    headers: {
+      'x-timestamp': Date.now(),
+      'x-sent': true
+    }
+  }
+
+  var fileName = req.params.name
+  res.sendFile(fileName, options, function (err) {
+    if (err) {
+      next(err)
+    } else {
+      console.log('Sent:', fileName)
+    }
+  })
+});
 
 const { pool } = require('./queries');
 async function injectUser(req, res, next) {
@@ -57,9 +91,10 @@ async function injectUser(req, res, next) {
   }
 }
 
-// catch 404 and forward to error handler
-app.use(function (req, res, next) {
-  next(createError(404));
+app.use(function(req, res, next) {
+  var err = new Error('Not Found');
+  err.status = 404;
+  next(err);
 });
 
 // error handler

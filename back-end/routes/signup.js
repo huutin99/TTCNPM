@@ -18,7 +18,6 @@ router.post('/', async (req, res) => {
             INSERT INTO "user" (username, password, email, name) 
             VALUES ('${req.body.username}', '${req.body.password}', '${req.body.email}', '${req.body.name}')`
         );
-        await pool.end();
         return res.status(200).send('Đã thêm người dùng')
     } catch (error) {
         // console.log('here')

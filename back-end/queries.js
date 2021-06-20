@@ -10,15 +10,6 @@ const pool = new Pool({
     }
 })
 
-const getUsers = (request, response) => {
-    pool.query('SELECT * FROM "user"', (error, results) => {
-        // if (error) {
-        //     throw error
-        // }
-        // response.status(200).json(results.rows)
-        console.log(results.rows)
-    })
-}
 
 module.exports = {
     pool
